@@ -1,11 +1,24 @@
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
+  darkMode: 'class',
+
+  // =============================================================================
+  // PERFORMANCE OPTIMIZATIONS - DAY 14
+  // =============================================================================
+
+  // Precise content paths for efficient CSS purging
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+
+  // Future-proof features
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
+
   theme: {
     extend: {
       colors: {

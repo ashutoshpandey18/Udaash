@@ -59,18 +59,20 @@ const MarketOrb = memo(function MarketOrb({
 }: MarketOrbProps) {
   const groupRef = useRef<THREE.Group>(null);
   const angleRef = useRef(initialAngle);
-  const { invalidate } = useThree();
+  const frameCountRef = useRef(0);
 
   useFrame((_, delta) => {
     if (!groupRef.current) return;
+
+    // Throttle to 30fps instead of 60fps for performance
+    frameCountRef.current++;
+    if (frameCountRef.current % 2 !== 0) return;
 
     angleRef.current += delta * orbitSpeed;
     const [x, y, z] = calculateOrbitPosition(angleRef.current, orbitRadius);
 
     groupRef.current.position.set(x, y, z);
     groupRef.current.rotation.y += delta * 0.3;
-
-    invalidate(); // Request next frame
   });
 
   return (
@@ -216,25 +218,24 @@ export default function OrbitalCanvas() {
         position: [0, 2, 8],
         fov: 50,
         near: 0.1,
-        far: 50, // Reduced far plane
+        far: 50,
       }}
-      // frameloop="demand" - only render when invalidate() is called
-      frameloop="demand"
+      // Change to always for smooth animation (throttled in components)
+      frameloop="always"
       gl={{
-        antialias: false, // Disabled for performance (decorative background)
+        antialias: false,
         alpha: true,
         powerPreference: 'high-performance',
-        stencil: false, // Not needed
+        stencil: false,
         depth: true,
       }}
-      // Cap DPR at 1.5 for better performance on high-DPI screens
-      dpr={[1, 1.5]}
+      // Cap DPR at 1.2 for better performance
+      dpr={[1, 1.2]}
       style={{
         width: '100%',
         height: '100%',
         background: 'transparent',
       }}
-      // Flat mode for slightly better performance
       flat
     >
       <Scene />

@@ -1,31 +1,18 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import { PhysicsProvider } from '@/components/physics-provider';
 import { Navbar } from '@/components/navbar';
+import { OfflineIndicator } from '@/components/offline-indicator';
+import { PWAInstallPrompt } from '@/components/pwa-install-prompt';
+import { ThemeProvider } from '@/components/theme-provider';
+import { getThemeInitScript } from '@/lib/theme';
 import type { ReactNode } from 'react';
 
 // =============================================================================
-// ROOT LAYOUT - PROVIDER ARCHITECTURE
+// ROOT LAYOUT - UDAASH (DAY 14: PERFORMANCE OPTIMIZED)
 // =============================================================================
-// Provider hierarchy designed for clean backend integration:
-//
-// <html>
-//   <body>
-//     <Providers>              ← FUTURE: Wrap with auth/data providers here
-//       <PhysicsProvider>      ← UI animation config (isolated from data)
-//         <Navbar />           ← Can receive user/auth data via props
-//         <main>{children}</main>
-//       </PhysicsProvider>
-//     </Providers>
-//   </body>
-// </html>
-//
-// BACKEND INTEGRATION NOTES:
-// 1. Add auth provider OUTSIDE PhysicsProvider (e.g., SessionProvider)
-// 2. Add data providers OUTSIDE PhysicsProvider (e.g., QueryClientProvider)
-// 3. PhysicsProvider only handles UI animation state
-// 4. Three.js canvas is isolated at page level, unaffected by providers here
+// "Calm Authority / Invisible Power"
+// Clean, minimal layout with performance optimizations
 // =============================================================================
 
 const inter = Inter({
@@ -35,34 +22,23 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Udaash — The Global Market Symphony',
-  description: 'Where markets dance in orbital harmony. Real-time visualization of India, US, and German market intelligence.',
-  keywords: ['markets', 'trading', 'india', 'us', 'germany', 'stocks', 'visualization'],
-  authors: [{ name: 'Udaash Team' }],
-  creator: 'Udaash',
-  publisher: 'Udaash',
+  title: 'UDAASH — AI Job Matching',
+  description: 'Intelligent job matching and prioritization. Track applications, analyze opportunities, and focus on what matters.',
+  keywords: ['jobs', 'ai matching', 'kanban', 'job search', 'career'],
+  authors: [{ name: 'UDAASH Team' }],
   manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    title: 'UDAASH',
+    statusBarStyle: 'default',
+  },
   icons: {
     icon: '/favicon.ico',
-    apple: '/favicon.ico',
-  },
-  openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: 'https://udaash.vercel.app',
-    siteName: 'Udaash',
-    title: 'Udaash — The Global Market Symphony',
-    description: 'Where markets dance in orbital harmony',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Udaash — The Global Market Symphony',
-    description: 'Where markets dance in orbital harmony',
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: '#1a0533',
+  themeColor: '#2563eb',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
@@ -81,15 +57,45 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        {/* Theme initialization (prevent FOUC) */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: getThemeInitScript(),
+          }}
+        />
+        {/* Service Worker registration */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                  navigator.serviceWorker.register('/sw.js').catch(err => {
+                    console.error('SW registration failed:', err);
+                  });
+                });
+              }
+            `,
+          }}
+        />
       </head>
-      <body className="antialiased" suppressHydrationWarning>
-        <PhysicsProvider>
-          <Navbar />
-          <main className="relative">
-            {children}
-          </main>
-        </PhysicsProvider>
+      <body className="antialiased bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100" suppressHydrationWarning>
+        <ThemeProvider>
+            {/* Offline status */}
+            <OfflineIndicator />
+
+            {/* Navigation */}
+            <Navbar />
+
+            {/* Main content */}
+            <main className="safe-area-inset">
+              {children}
+            </main>
+
+            {/* PWA install prompt */}
+            <PWAInstallPrompt />
+          </ThemeProvider>
       </body>
     </html>
   );

@@ -1,30 +1,49 @@
 @import "tailwindcss";
 
+/* =============================================================================
+   UDAASH DESIGN SYSTEM - "Calm Authority / Invisible Power"
+   =============================================================================
+   - Nothing flashy, nothing loud
+   - Confidence through restraint
+   - Speed without ceremony
+   - Enterprise-ready, production-grade, mobile-optimized
+   ============================================================================= */
+
 @theme {
-  --color-symphony-50: #faf5ff;
-  --color-symphony-100: #f3e8ff;
-  --color-symphony-200: #e9d5ff;
-  --color-symphony-300: #d8b4fe;
-  --color-symphony-400: #c084fc;
-  --color-symphony-500: #a855f7;
-  --color-symphony-600: #9333ea;
-  --color-symphony-700: #7c3aed;
-  --color-symphony-800: #6b21a8;
-  --color-symphony-900: #581c87;
-  --color-symphony-950: #3b0764;
+  /* Neutral base palette - calm and professional */
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-200: #e5e5e5;
+  --color-neutral-300: #d4d4d4;
+  --color-neutral-400: #a3a3a3;
+  --color-neutral-500: #737373;
+  --color-neutral-600: #525252;
+  --color-neutral-700: #404040;
+  --color-neutral-800: #262626;
+  --color-neutral-850: #1a1a1a;
+  --color-neutral-900: #171717;
+  --color-neutral-950: #0a0a0a;
 
-  --color-india: #FF9933;
-  --color-us: #3C3B6E;
-  --color-germany: #FFCC00;
+  /* Market colors - muted, professional */
+  --color-india: #d97706;      /* Muted amber */
+  --color-us: #3b82f6;         /* Calm blue */
+  --color-germany: #6b7280;    /* Cool gray */
 
-  --font-family-sans: var(--font-inter), system-ui, sans-serif;
+  /* Accent - minimal usage */
+  --color-accent: #3b82f6;
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+
+  /* Typography */
+  --font-family-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
 }
 
 @layer base {
   :root {
-    --background: 270 50% 5%;
-    --foreground: 270 10% 95%;
-    --symphony-primary: 270 70% 60%;
+    --background: 0 0% 4%;
+    --foreground: 0 0% 95%;
+    color-scheme: dark;
   }
 
   * {
@@ -33,109 +52,309 @@
     margin: 0;
   }
 
+  html {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+    /* Support dynamic viewport height (mobile) */
+    height: 100dvh;
+  }
+
   html,
   body {
     max-width: 100vw;
     overflow-x: hidden;
-    font-family: var(--font-inter), system-ui, sans-serif;
+    font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
   }
 
   body {
-    background: linear-gradient(135deg, #1a0533 0%, #2d1b4e 25%, #1e1145 50%, #0f0a1e 100%);
-    color: rgb(255, 255, 255);
+    background-color: #0a0a0a;
+    color: #fafafa;
     min-height: 100vh;
+    min-height: 100dvh; /* Dynamic viewport height for mobile */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
+    /* Mobile text optimization */
+    text-rendering: optimizeLegibility;
   }
 
   ::selection {
-    background: rgba(168, 85, 247, 0.4);
+    background: rgba(59, 130, 246, 0.3);
     color: white;
+  }
+
+  /* Focus styles - visible but not flashy */
+  :focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* Safe area insets (iOS notch support) */
+  .safe-area-inset {
+    padding-top: env(safe-area-inset-top);
+    padding-right: env(safe-area-inset-right);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+  }
+
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .safe-area-left {
+    padding-left: env(safe-area-inset-left);
+  }
+
+  .safe-area-right {
+    padding-right: env(safe-area-inset-right);
+  }
+
+  /* Touch optimization */
+  button,
+  a,
+  input,
+  textarea,
+  select {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  /* Minimum touch target size (44px × 44px) */
+  button,
+  a[role="button"],
+  [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
   }
 }
 
 @layer components {
-  .symphony-gradient-text {
-    background: linear-gradient(135deg, #c084fc 0%, #a855f7 50%, #7c3aed 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  /* Surface card - flat with subtle border */
+  .surface {
+    background-color: #171717;
+    border: 1px solid #262626;
+    border-radius: 0.75rem;
   }
 
-  .symphony-glow {
-    box-shadow: 0 0 60px rgba(168, 85, 247, 0.3);
+  .surface-elevated {
+    background-color: #1a1a1a;
+    border: 1px solid #303030;
+    border-radius: 0.75rem;
   }
 
-  .symphony-input {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(168, 85, 247, 0.3);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Input styles - clean and functional */
+  .input-base {
+    width: 100%;
+    background-color: #171717;
+    border: 1px solid #303030;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    color: #fafafa;
+    transition: border-color 100ms ease;
   }
 
-  .symphony-input:hover {
-    border-color: rgba(168, 85, 247, 0.6);
-    box-shadow: 0 0 30px rgba(168, 85, 247, 0.3);
+  .input-base::placeholder {
+    color: #737373;
   }
 
-  .symphony-input:focus {
+  .input-base:hover {
+    border-color: #404040;
+  }
+
+  .input-base:focus {
     outline: none;
-    border-color: rgba(168, 85, 247, 0.8);
-    box-shadow: 0 0 40px rgba(168, 85, 247, 0.5), inset 0 0 20px rgba(168, 85, 247, 0.1);
+    border-color: #3b82f6;
   }
 
-  .glass-panel {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+  .input-base:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 
-  .market-orb {
-    position: relative;
+  /* Large input variant */
+  .input-large {
+    padding: 1rem 1.25rem;
+    font-size: 1.125rem;
+    border-radius: 0.75rem;
+  }
+
+  /* Button base styles */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 100ms ease, opacity 100ms ease;
+    white-space: nowrap;
+  }
+
+  .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .btn-primary {
+    background-color: #3b82f6;
+    color: white;
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    background-color: #2563eb;
+  }
+
+  .btn-secondary {
+    background-color: #262626;
+    color: #fafafa;
+    border: 1px solid #404040;
+  }
+
+  .btn-secondary:hover:not(:disabled) {
+    background-color: #303030;
+  }
+
+  .btn-ghost {
+    background-color: transparent;
+    color: #a3a3a3;
+  }
+
+  .btn-ghost:hover:not(:disabled) {
+    background-color: #262626;
+    color: #fafafa;
+  }
+
+  /* Icon button */
+  .btn-icon {
+    padding: 0.625rem;
+    min-width: 44px;
+  }
+
+  /* Market indicator pills */
+  .market-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border-radius: 9999px;
+    background-color: #1a1a1a;
+    border: 1px solid #303030;
+    color: #d4d4d4;
+  }
+
+  .market-pill-dot {
+    width: 0.5rem;
+    height: 0.5rem;
     border-radius: 50%;
-    box-shadow: 0 0 30px currentColor;
   }
 
-  .market-orb::after {
-    content: '';
-    position: absolute;
-    inset: -4px;
-    border-radius: 50%;
-    background: radial-gradient(circle, currentColor 0%, transparent 70%);
-    opacity: 0.3;
+  /* Status badge */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.625rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border-radius: 9999px;
+  }
+
+  .badge-success {
+    background-color: rgba(34, 197, 94, 0.15);
+    color: #22c55e;
+  }
+
+  .badge-info {
+    background-color: rgba(59, 130, 246, 0.15);
+    color: #3b82f6;
+  }
+
+  .badge-warning {
+    background-color: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+  }
+
+  /* Card styles for job listings */
+  .card {
+    background-color: #171717;
+    border: 1px solid #262626;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    transition: border-color 100ms ease;
+  }
+
+  .card:hover {
+    border-color: #404040;
+  }
+
+  .card-interactive {
+    cursor: pointer;
+  }
+
+  .card-interactive:hover {
+    border-color: #525252;
+  }
+
+  /* Text utilities */
+  .text-primary {
+    color: #fafafa;
+  }
+
+  .text-secondary {
+    color: #a3a3a3;
+  }
+
+  .text-muted {
+    color: #737373;
+  }
+
+  /* Divider */
+  .divider {
+    height: 1px;
+    background-color: #262626;
+    border: none;
   }
 }
 
 @layer utilities {
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
-  .animate-glow {
-    animation: glow 2s ease-in-out infinite alternate;
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 
-  .animate-spin-slow {
-    animation: spin 20s linear infinite;
+  /* Safe area padding for mobile */
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
   }
 
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-20px);
-    }
-  }
-
-  @keyframes glow {
-    0% {
-      box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
-    }
-    100% {
-      box-shadow: 0 0 40px rgba(168, 85, 247, 0.8);
-    }
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
   }
 }

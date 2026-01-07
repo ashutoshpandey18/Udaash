@@ -1,179 +1,245 @@
 'use client';
 
-import { useState, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { usePhysics } from './physics-provider';
+import { useState, useCallback, useEffect } from 'react';
+import { ThemeToggle } from './theme-toggle';
+import { getUnreadCount } from '@/lib/notification-engine';
+// import { useSession, signOut } from 'next-auth/react';
+import Link from 'next/link';
+
+// =============================================================================
+// NAVBAR - "Calm Authority / Invisible Power"
+// =============================================================================
+// Clean, minimal navigation
+// No flashy animations, no visual noise
+// =============================================================================
 
 type Market = 'all' | 'india' | 'us' | 'germany';
 
 interface MarketOption {
   id: Market;
   name: string;
-  flag: string;
   color: string;
 }
 
 const markets: MarketOption[] = [
-  { id: 'all', name: 'All Markets', flag: '🌐', color: '#a855f7' },
-  { id: 'india', name: 'India', flag: '🇮🇳', color: '#FF9933' },
-  { id: 'us', name: 'United States', flag: '🇺🇸', color: '#3C3B6E' },
-  { id: 'germany', name: 'Germany', flag: '🇩🇪', color: '#FFCC00' },
+  { id: 'all', name: 'All', color: '#3b82f6' },
+  { id: 'india', name: 'India', color: '#d97706' },
+  { id: 'us', name: 'US', color: '#3b82f6' },
+  { id: 'germany', name: 'Germany', color: '#6b7280' },
 ];
 
 export function Navbar() {
   const [selectedMarket, setSelectedMarket] = useState<Market>('all');
-  const [isOpen, setIsOpen] = useState(false);
-  const { springConfig } = usePhysics();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
+  const [mounted, setMounted] = useState(false);
+  // const { data: session } = useSession(); // TODO: Enable after OAuth setup
+  const session = null; // Temporarily disabled until OAuth is configured
+  const locale = 'en';
+  const setLocale = (_: string) => {};
+
+  useEffect(() => {
+    setMounted(true);
+
+    // Update unread count on mount and when storage changes
+    const updateCount = () => setUnreadCount(getUnreadCount());
+    updateCount();
+
+    window.addEventListener('storage', updateCount);
+    // Also listen for custom event when notifications change
+    window.addEventListener('notificationsChanged', updateCount);
+
+    return () => {
+      window.removeEventListener('storage', updateCount);
+      window.removeEventListener('notificationsChanged', updateCount);
+    };
+  }, []);
 
   const handleMarketSelect = useCallback((market: Market) => {
     setSelectedMarket(market);
-    setIsOpen(false);
+    setIsMobileMenuOpen(false);
   }, []);
 
-  const currentMarket = markets.find((m) => m.id === selectedMarket) ?? markets[0];
+  const toggleLanguage = useCallback(() => {
+    const newLocale: Locale = locale === 'en' ? 'hi' : 'en';
+    setLocale(newLocale);
+  }, [locale, setLocale]);
 
   return (
-    <motion.nav
-      className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 lg:px-8 py-4"
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ...springConfig }}
-    >
-      <div className="max-w-7xl mx-auto">
-        <div className="flex items-center justify-between glass-panel rounded-2xl px-4 sm:px-6 py-3">
+    <nav className="sticky top-0 z-50 w-full border-b border-neutral-200 dark:border-neutral-800 bg-white/95 dark:bg-neutral-950/95 backdrop-blur-sm">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="flex items-center justify-between h-14 sm:h-16">
+
           {/* Logo */}
-          <motion.a
-            href="/"
-            className="flex items-center gap-2"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-symphony-400 to-symphony-600 flex items-center justify-center">
-              <span className="text-white font-bold text-sm">U</span>
+          <a href="/" className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-md bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 flex items-center justify-center">
+              <span className="text-neutral-900 dark:text-neutral-100 font-semibold text-sm">U</span>
             </div>
-            <span className="text-lg font-semibold symphony-gradient-text hidden sm:block">
+            <span className="text-base font-semibold text-neutral-900 dark:text-neutral-100 hidden sm:block">
               Udaash
             </span>
-          </motion.a>
+          </a>
 
-          {/* Center - Market Status */}
-          <div className="hidden md:flex items-center gap-6">
-            {markets.slice(1).map((market) => (
-              <motion.button
+          {/* Desktop - Market tabs */}
+          <div className="hidden md:flex items-center gap-1">            <Link href="/kanban" className="px-3 py-1.5 rounded-md text-sm text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">
+              Kanban
+            </Link>
+            <Link href="/analytics" className="px-3 py-1.5 rounded-md text-sm text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">
+              Analytics
+            </Link>
+            <Link href="/network" className="px-3 py-1.5 rounded-md text-sm text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">
+              Network
+            </Link>            {markets.map((market) => (
+              <button
                 key={market.id}
                 onClick={() => handleMarketSelect(market.id)}
-                className={`flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors ${
+                className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm transition-colors ${
                   selectedMarket === market.id
-                    ? 'bg-white/10'
-                    : 'hover:bg-white/5'
+                    ? 'bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100'
+                    : 'text-neutral-500 dark:text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800/50'
                 }`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
               >
-                <span className="text-base">{market.flag}</span>
-                <span className="text-sm text-white/70">{market.name}</span>
                 <span
-                  className="w-2 h-2 rounded-full animate-pulse"
+                  className="w-2 h-2 rounded-full"
                   style={{ backgroundColor: market.color }}
                 />
-              </motion.button>
+                <span>{market.name}</span>
+              </button>
             ))}
           </div>
 
-          {/* Right - Market Selector (Mobile) */}
-          <div className="relative md:hidden">
-            <motion.button
-              onClick={() => setIsOpen(!isOpen)}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl glass-panel"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <span className="text-lg">{currentMarket?.flag}</span>
-              <span className="text-sm text-white/80">{currentMarket?.name}</span>
-              <motion.svg
-                className="w-4 h-4 text-white/60"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                animate={{ rotate: isOpen ? 180 : 0 }}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 9l-7 7-7-7"
-                />
-              </motion.svg>
-            </motion.button>
+          {/* Desktop - Actions */}
+          <div className="hidden sm:flex items-center gap-2">
+            <ThemeToggle variant="icon-only" />
 
-            <AnimatePresence>
-              {isOpen && (
-                <motion.div
-                  className="absolute right-0 mt-2 w-48 glass-panel rounded-xl overflow-hidden"
-                  initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  {markets.map((market) => (
-                    <motion.button
-                      key={market.id}
-                      onClick={() => handleMarketSelect(market.id)}
-                      className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors ${
-                        selectedMarket === market.id
-                          ? 'bg-symphony-500/20'
-                          : 'hover:bg-white/5'
-                      }`}
-                      whileHover={{ x: 4 }}
-                    >
-                      <span className="text-lg">{market.flag}</span>
-                      <span className="text-sm text-white/80">{market.name}</span>
-                      {selectedMarket === market.id && (
-                        <motion.span
-                          className="ml-auto w-2 h-2 rounded-full bg-symphony-400"
-                          layoutId="market-indicator"
-                        />
-                      )}
-                    </motion.button>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-
-          {/* Right - Actions */}
-          <div className="hidden sm:flex items-center gap-3">
-            <motion.button
-              className="p-2 rounded-lg hover:bg-white/5 transition-colors"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
+            <Link
+              href="/notifications"
+              className="btn btn-ghost btn-icon relative"
               aria-label="Notifications"
             >
-              <svg
-                className="w-5 h-5 text-white/60"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                />
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
               </svg>
-            </motion.button>
+              {unreadCount > 0 && (
+                <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-semibold text-white">
+                  {unreadCount > 9 ? '9+' : unreadCount}
+                </span>
+              )}
+            </Link>
 
-            <motion.button
-              className="px-4 py-2 rounded-xl bg-symphony-500/20 hover:bg-symphony-500/30 text-symphony-300 text-sm font-medium transition-colors"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              Connect
-            </motion.button>
+            {session?.user ? (
+              <div className="flex items-center gap-2">
+                <Link href="/profile" className="btn btn-ghost text-sm">
+                  {session.user.name || 'Profile'}
+                </Link>
+                <button
+                  onClick={() => signOut({ callbackUrl: '/' })}
+                  className="btn btn-secondary text-sm"
+                >
+                  Sign out
+                </button>
+              </div>
+            ) : (
+              <Link href="/auth/signin" className="btn btn-secondary text-sm">
+                Sign in
+              </Link>
+            )}
           </div>
+
+          {/* Mobile menu button */}
+          <button
+            className="md:hidden btn btn-ghost btn-icon"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {isMobileMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
         </div>
+
+        {/* Mobile menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden py-3 border-t border-neutral-200 dark:border-neutral-800">
+            <div className="space-y-1">
+              {/* Navigation Links */}
+              <Link
+                href="/kanban"
+                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-sm text-left transition-colors text-neutral-600 dark:text-neutral-400 hover:bg-neutral-50 dark:hover:bg-neutral-800/50"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <span>Kanban</span>
+              </Link>
+              <Link
+                href="/analytics"
+                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-sm text-left transition-colors text-neutral-600 dark:text-neutral-400 hover:bg-neutral-50 dark:hover:bg-neutral-800/50"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <span>Analytics</span>
+              </Link>
+              <Link
+                href="/network"
+                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-sm text-left transition-colors text-neutral-600 dark:text-neutral-400 hover:bg-neutral-50 dark:hover:bg-neutral-800/50"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <span>Network</span>
+              </Link>
+
+              {/* Market Filters */}
+              {markets.map((market) => (
+                <button
+                  key={market.id}
+                  onClick={() => handleMarketSelect(market.id)}
+                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-sm text-left transition-colors ${
+                    selectedMarket === market.id
+                      ? 'bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100'
+                      : 'text-neutral-600 dark:text-neutral-400 hover:bg-neutral-50 dark:hover:bg-neutral-800/50'
+                  }`}
+                >
+                  <span
+                    className="w-2 h-2 rounded-full"
+                    style={{ backgroundColor: market.color }}
+                  />
+                  <span>{market.name}</span>
+                  {selectedMarket === market.id && (
+                    <svg className="w-4 h-4 ml-auto text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  )}
+                </button>
+              ))}
+            </div>
+            <div className="mt-3 pt-3 border-t border-neutral-200 dark:border-neutral-800 space-y-2">
+              {/* Language Toggle */}
+              {mounted && (
+                <button
+                  onClick={toggleLanguage}
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-sm text-left transition-colors text-neutral-600 dark:text-neutral-400 hover:bg-neutral-50 dark:hover:bg-neutral-800/50"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                  </svg>
+                  <span>{LOCALE_NAMES[locale].native}</span>
+                  <svg className="w-4 h-4 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                  </svg>
+                </button>
+              )}
+
+              <div className="flex items-center gap-2">
+                <ThemeToggle variant="compact" showLabel={false} />
+                <button className="btn btn-secondary flex-1 text-sm">
+                  Sign in
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
-    </motion.nav>
+    </nav>
   );
 }

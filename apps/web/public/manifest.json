@@ -1,12 +1,12 @@
 {
-  "name": "Udaash - The Global Market Symphony",
-  "short_name": "Udaash",
-  "description": "Where markets dance in orbital harmony. Real-time visualization of India, US, and German market intelligence.",
+  "name": "UDAASH — AI Job Matching",
+  "short_name": "UDAASH",
+  "description": "Intelligent job matching and prioritization. Track applications, analyze opportunities, and focus on what matters.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#1a0533",
-  "theme_color": "#a855f7",
-  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "orientation": "any",
   "scope": "/",
   "lang": "en",
   "icons": [
@@ -14,22 +14,20 @@
       "src": "/favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
-    },
-    {
-      "src": "/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
     }
   ],
-  "categories": ["finance", "business", "productivity"],
+  "categories": ["productivity", "business", "lifestyle"],
   "screenshots": [],
   "prefer_related_applications": false,
-  "related_applications": []
+  "related_applications": [],
+  "share_target": {
+    "action": "/share",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
 }
