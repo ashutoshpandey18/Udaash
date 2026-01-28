@@ -1,0 +1,104 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Retry",
+    "cancel": "Cancel",
+    "save": "Save",
+    "close": "Close",
+    "search": "Search",
+    "filter": "Filter",
+    "clear": "Clear",
+    "apply": "Apply",
+    "back": "Back",
+    "next": "Next"
+  },
+  "nav": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "jobs": "Jobs",
+    "kanban": "Kanban",
+    "analytics": "Analytics",
+    "notifications": "Notifications",
+    "settings": "Settings",
+    "profile": "Profile"
+  },
+  "voice": {
+    "listening": "Listening...",
+    "speak": "Speak",
+    "tapToSpeak": "Tap to speak",
+    "processing": "Processing...",
+    "noSpeechDetected": "No speech detected",
+    "speechNotSupported": "Speech recognition not supported",
+    "permissionDenied": "Microphone permission denied",
+    "languageDetected": "Language detected",
+    "switchLanguage": "Switch language",
+    "english": "English",
+    "hindi": "Hindi",
+    "hinglish": "Hinglish"
+  },
+  "jobs": {
+    "title": "Jobs",
+    "location": "Location",
+    "company": "Company",
+    "posted": "Posted",
+    "matchScore": "Match Score",
+    "viewDetails": "View Details",
+    "applyNow": "Apply Now",
+    "saveJob": "Save Job",
+    "shareJob": "Share Job",
+    "noJobsFound": "No jobs found",
+    "loadMore": "Load More"
+  },
+  "kanban": {
+    "backlog": "Backlog",
+    "applied": "Applied",
+    "interview": "Interview",
+    "offer": "Offer",
+    "rejected": "Rejected",
+    "dragToMove": "Drag to move",
+    "viewIntelligence": "View Intelligence",
+    "addNote": "Add Note"
+  },
+  "analytics": {
+    "overview": "Overview",
+    "trends": "Trends",
+    "insights": "Insights",
+    "applications": "Applications",
+    "responses": "Responses",
+    "interviews": "Interviews",
+    "offers": "Offers",
+    "avgResponseTime": "Avg Response Time",
+    "successRate": "Success Rate"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "markAllRead": "Mark All Read",
+    "clearAll": "Clear All",
+    "noNotifications": "No notifications",
+    "newJobMatch": "New job match",
+    "applicationReply": "Application reply",
+    "interviewScheduled": "Interview scheduled",
+    "settings": "Notification Settings"
+  },
+  "errors": {
+    "somethingWrong": "Something went wrong",
+    "tryAgain": "Please try again",
+    "networkError": "Network error",
+    "notFound": "Not found",
+    "unauthorized": "Unauthorized",
+    "serverError": "Server error"
+  },
+  "offline": {
+    "youAreOffline": "You are offline",
+    "someFeaturesMayNotWork": "Some features may not work",
+    "reconnecting": "Reconnecting...",
+    "backOnline": "Back online"
+  },
+  "pwa": {
+    "installApp": "Install App",
+    "installPrompt": "Install UDAASH for quick access",
+    "installNow": "Install Now",
+    "installLater": "Maybe Later"
+  }
+}

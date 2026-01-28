@@ -1,0 +1,104 @@
+{
+  "common": {
+    "loading": "लोड हो रहा है...",
+    "error": "त्रुटि",
+    "retry": "पुनः प्रयास करें",
+    "cancel": "रद्द करें",
+    "save": "सहेजें",
+    "close": "बंद करें",
+    "search": "खोजें",
+    "filter": "फ़िल्टर",
+    "clear": "साफ़ करें",
+    "apply": "लागू करें",
+    "back": "पीछे",
+    "next": "आगे"
+  },
+  "nav": {
+    "home": "होम",
+    "dashboard": "डैशबोर्ड",
+    "jobs": "नौकरियाँ",
+    "kanban": "कान्बन",
+    "analytics": "विश्लेषण",
+    "notifications": "सूचनाएं",
+    "settings": "सेटिंग्स",
+    "profile": "प्रोफ़ाइल"
+  },
+  "voice": {
+    "listening": "सुन रहे हैं...",
+    "speak": "बोलें",
+    "tapToSpeak": "बोलने के लिए टैप करें",
+    "processing": "प्रोसेस हो रहा है...",
+    "noSpeechDetected": "कोई आवाज़ नहीं मिली",
+    "speechNotSupported": "वॉइस रिकग्निशन समर्थित नहीं है",
+    "permissionDenied": "माइक्रोफोन अनुमति अस्वीकृत",
+    "languageDetected": "भाषा पहचानी गई",
+    "switchLanguage": "भाषा बदलें",
+    "english": "अंग्रेज़ी",
+    "hindi": "हिन्दी",
+    "hinglish": "हिंग्लिश"
+  },
+  "jobs": {
+    "title": "नौकरियाँ",
+    "location": "स्थान",
+    "company": "कंपनी",
+    "posted": "पोस्ट किया गया",
+    "matchScore": "मैच स्कोर",
+    "viewDetails": "विवरण देखें",
+    "applyNow": "अभी आवेदन करें",
+    "saveJob": "नौकरी सहेजें",
+    "shareJob": "नौकरी शेयर करें",
+    "noJobsFound": "कोई नौकरी नहीं मिली",
+    "loadMore": "और लोड करें"
+  },
+  "kanban": {
+    "backlog": "बैकलॉग",
+    "applied": "आवेदन किया",
+    "interview": "इंटरव्यू",
+    "offer": "ऑफ़र",
+    "rejected": "अस्वीकृत",
+    "dragToMove": "खींचकर ले जाएं",
+    "viewIntelligence": "इंटेलिजेंस देखें",
+    "addNote": "नोट जोड़ें"
+  },
+  "analytics": {
+    "overview": "सारांश",
+    "trends": "ट्रेंड्स",
+    "insights": "अंतर्दृष्टि",
+    "applications": "आवेदन",
+    "responses": "प्रतिक्रियाएं",
+    "interviews": "इंटरव्यू",
+    "offers": "ऑफ़र",
+    "avgResponseTime": "औसत प्रतिक्रिया समय",
+    "successRate": "सफलता दर"
+  },
+  "notifications": {
+    "title": "सूचनाएं",
+    "markAllRead": "सभी पढ़े हुए के रूप में चिह्नित करें",
+    "clearAll": "सभी साफ़ करें",
+    "noNotifications": "कोई सूचना नहीं",
+    "newJobMatch": "नई नौकरी मिलान",
+    "applicationReply": "आवेदन का जवाब",
+    "interviewScheduled": "इंटरव्यू निर्धारित",
+    "settings": "सूचना सेटिंग्स"
+  },
+  "errors": {
+    "somethingWrong": "कुछ गलत हो गया",
+    "tryAgain": "कृपया पुनः प्रयास करें",
+    "networkError": "नेटवर्क त्रुटि",
+    "notFound": "नहीं मिला",
+    "unauthorized": "अनधिकृत",
+    "serverError": "सर्वर त्रुटि"
+  },
+  "offline": {
+    "youAreOffline": "आप ऑफ़लाइन हैं",
+    "someFeaturesMayNotWork": "कुछ सुविधाएं काम नहीं कर सकतीं",
+    "reconnecting": "पुनः कनेक्ट हो रहा है...",
+    "backOnline": "वापस ऑनलाइन"
+  },
+  "pwa": {
+    "installApp": "ऐप इंस्टॉल करें",
+    "installPrompt": "त्वरित पहुंच के लिए UDAASH इंस्टॉल करें",
+    "installNow": "अभी इंस्टॉल करें",
+    "installLater": "बाद में"
+  }
+}
