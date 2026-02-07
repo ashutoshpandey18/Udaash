@@ -53,6 +53,7 @@ const config: Config = {
       },
       fontFamily: {
         sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-space-grotesk)', 'var(--font-inter)', 'system-ui', 'sans-serif'],
       },
       backgroundImage: {
         'symphony-gradient': 'linear-gradient(135deg, #1a0533 0%, #2d1b4e 25%, #1e1145 50%, #0f0a1e 100%)',
@@ -63,6 +64,18 @@ const config: Config = {
         'spin-slow': 'spin 20s linear infinite',
         'float': 'float 6s ease-in-out infinite',
         'glow': 'glow 2s ease-in-out infinite alternate',
+        'border-rotate': 'border-rotate 4s linear infinite',
+        'light-sweep': 'light-sweep 6s ease-in-out infinite',
+        'system-pulse': 'system-pulse 2s ease-in-out infinite',
+        'system-pulse-delay': 'system-pulse 2s ease-in-out 0.6s infinite',
+        'system-pulse-delay-2': 'system-pulse 2s ease-in-out 1.2s infinite',
+        'bar-shimmer': 'bar-shimmer 3s ease-in-out infinite',
+        'bar-shimmer-delay': 'bar-shimmer 3s ease-in-out 1s infinite',
+        'bar-shimmer-delay-2': 'bar-shimmer 3s ease-in-out 2s infinite',
+        'fade-in-up': 'fade-in-up 0.8s ease-out forwards',
+        'fade-in-up-delay': 'fade-in-up 0.8s ease-out 0.15s forwards',
+        'fade-in-up-delay-2': 'fade-in-up 0.8s ease-out 0.3s forwards',
+        'fade-in-up-delay-3': 'fade-in-up 0.8s ease-out 0.45s forwards',
       },
       keyframes: {
         float: {
@@ -72,6 +85,28 @@ const config: Config = {
         glow: {
           '0%': { boxShadow: '0 0 20px rgba(168, 85, 247, 0.4)' },
           '100%': { boxShadow: '0 0 40px rgba(168, 85, 247, 0.8)' },
+        },
+        'border-rotate': {
+          '0%': { '--border-angle': '0deg' },
+          '100%': { '--border-angle': '360deg' },
+        },
+        'light-sweep': {
+          '0%, 100%': { transform: 'translateX(-100%)', opacity: '0' },
+          '40%': { opacity: '1' },
+          '60%': { opacity: '1' },
+          '50%': { transform: 'translateX(100%)' },
+        },
+        'system-pulse': {
+          '0%, 100%': { opacity: '0.3' },
+          '50%': { opacity: '1' },
+        },
+        'bar-shimmer': {
+          '0%, 100%': { width: '40%', opacity: '0.2' },
+          '50%': { width: '80%', opacity: '0.5' },
+        },
+        'fade-in-up': {
+          '0%': { opacity: '0', transform: 'translateY(24px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
         },
       },
       boxShadow: {

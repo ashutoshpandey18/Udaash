@@ -66,7 +66,7 @@ export function Navbar() {
   }, [locale, setLocale]);
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-neutral-200 dark:border-neutral-800 bg-white/95 dark:bg-neutral-950/95 backdrop-blur-sm">
+    <nav className="fixed top-0 z-50 w-full border-b border-neutral-800/50 bg-black/60 backdrop-blur-md">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-14 sm:h-16">
 

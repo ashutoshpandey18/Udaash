@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import { Navbar } from '@/components/navbar';
 import { OfflineIndicator } from '@/components/offline-indicator';
@@ -19,6 +19,12 @@ const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-inter',
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-space-grotesk',
 });
 
 export const metadata: Metadata = {
@@ -52,7 +58,7 @@ export default function RootLayout({
   children: ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable} suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`} suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -80,7 +86,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="antialiased bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100" suppressHydrationWarning>
+      <body className="antialiased bg-black text-neutral-100" suppressHydrationWarning>
         <ThemeProvider>
             {/* Offline status */}
             <OfflineIndicator />
@@ -89,7 +95,7 @@ export default function RootLayout({
             <Navbar />
 
             {/* Main content */}
-            <main className="safe-area-inset">
+            <main>
               {children}
             </main>
 

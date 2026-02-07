@@ -1,18 +1,13 @@
-import { HeroContent } from '@/components/hero-content';
+import { LandingHeroLight } from '@/components/landing-hero-light';
 
 // =============================================================================
 // UDAASH - HOME PAGE
 // =============================================================================
-// "Calm Authority / Invisible Power"
-// Clean, responsive, enterprise-ready
+// Production-grade SaaS landing page
+// Light Theme: White + Warm Neutrals — clean, technical, accessible
 // =============================================================================
 
 export default function HomePage() {
-  return (
-    <main className="min-h-screen w-full bg-neutral-950">
-      {/* Main content */}
-      <HeroContent />
-    </main>
-  );
+  return <LandingHeroLight />;
 }
 
